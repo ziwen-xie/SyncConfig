@@ -17,14 +17,64 @@ with open('example.ini', 'w') as configfile:
   config.write(configfile)
 
 
+# create config file and write sample parser
+def ini_config():
+    config = configparser.ConfigParser()
 
-def autoFormat(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    config['DEFAULT'] = {'var1': '45',
+                         'var2': '2',
+                         'var3': '9'}
+
+    with open('config.ini', 'w') as configfile:
+        config.write(configfile)
+
+# read config
+def read_config(filename, section, key, verbose=False):
+    """read config file, with input filename, section and key, outputs a value from config file"""
+    config = configparser.ConfigParser()
+    config.read(filename)
+    value = config[section][key]
+    return value
 
 
-# Press the green button in the gutter to run the script.
+# autoformat the values with comma inserted
+def autoFormat(description, var):
+
+    # define variables
+    var_new = "" # create temp var to store
+
+    # add comma after every variable except last one
+    for elements in range(len(var)):
+        if elements == len(var)-1:
+            var_new = var_new + str(var[elements])
+        else:
+            var_new += str(var[elements])
+            var_new += ", "
+
+    output = description + var_new
+    return output
+
+
+
+# main function
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    print("Start")
+    desc1 = "sample = "
+    var1 = 1
+    var2 = 2
+    var3 = 5
+    var = [var1]
+    test1 = autoFormat(desc1, var)
+    print(test1)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # ini_config()
+
+    # define variables
+    filename = 'config.ini'
+    section = 'DEFAULT'
+    key = 'var1'
+
+    # add variables
+    value = read_config(filename, section, key, verbose=False)
+    print(autoFormat(desc1, [value]))
+

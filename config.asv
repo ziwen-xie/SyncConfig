@@ -1,0 +1,15 @@
+import iniConfig.*
+
+ini = IniConfig();
+ini.ReadFile('config.ini');
+
+section = 'DEFAULT';
+keys = 'var1';
+new_values = '6';
+
+ini.SetValues(section, keys, new_values, '%.3f');
+ini.WriteFile('config.ini');
+fprintf('job done \n');
+
+
+pyrunfile("main.py");
